@@ -169,20 +169,32 @@ function format(n){
 }
 
 function initCounters(){
+
+  const data = {
+    onlyfans:{views:20100, members:18300},
+    deepweb:{views:15000, members:10500},
+    sugardaddy:{views:18000, members:13000},
+    schoolgirl:{views:25000, members:20200},
+    valetodo:{views:10000, members:8000},
+    exclusive:{views:8000, members:6500}
+  };
+
   groups.forEach(g=>{
+
     const viewKey = `views_${g.id}`;
     const memberKey = `members_${g.id}`;
 
-    let views = parseInt(localStorage.getItem(viewKey)) || Math.floor(5000 + Math.random()*15000);
-    let members = parseInt(localStorage.getItem(memberKey)) || Math.floor(1000 + Math.random()*9000);
+    let views = parseInt(localStorage.getItem(viewKey)) || data[g.id].views;
+    let members = parseInt(localStorage.getItem(memberKey)) || data[g.id].members;
 
     localStorage.setItem(viewKey,views);
     localStorage.setItem(memberKey,members);
 
     document.getElementById(`views-${g.id}`).innerText = format(views);
     document.getElementById(`members-${g.id}`).innerText = format(members);
+
   });
-}
+ }
 
 initCounters();
 
