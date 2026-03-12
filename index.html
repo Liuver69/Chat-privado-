@@ -138,7 +138,7 @@ groups.forEach(g=>{
     btn.onclick = ()=>alert("Chat disponible para miembros verificados");
   }
 
-  const emoji = emojis[Math.floor(Math.random()*emojis.length)];
+  const emojiList = getRandomEmojis(emojis,5).join(" ");
 
   btn.innerHTML=`
   <img class="group-img" src="${g.img}">
