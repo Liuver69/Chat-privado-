@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -118,12 +119,20 @@ animation:float 1.5s infinite ease-in-out;
 
 <script>
 
-// OBTENER NOMBRE DEL USUARIO DE TELEGRAM
-let userName = "usuario";
+/* INICIALIZAR TELEGRAM WEBAPP */
 
-if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe.user) {
-  userName = Telegram.WebApp.initDataUnsafe.user.first_name;
+const tg = window.Telegram?.WebApp;
+
+if(tg){
+tg.ready();
+tg.expand();
 }
+
+/* OBTENER NOMBRE DEL USUARIO */
+
+let userName = tg?.initDataUnsafe?.user?.first_name || "usuario";
+
+/* GRUPOS */
 
 const groups = [
 {name:"ONLYFANS 🏆", img:"https://i.ibb.co/5X0PQH3q/4-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans", id:"onlyfans"},
@@ -134,39 +143,43 @@ const groups = [
 {name:"🍑Exclusivo 💎", img:"https://i.ibb.co/4gpVcSNk/IMG-20260227-113145-675.jpg", link:null, id:"exclusive"}
 ];
 
-const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","🔞","🎉","😜","💫"];
+const emojis=["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","✨","🎉","😜","💫"];
+const shuffled=[...emojis].sort(()=>0.5-Math.random());
 
-const shuffledEmojis = [...emojis].sort(()=>0.5 - Math.random());
+/* CREAR BOTONES */
 
 groups.forEach((g,index)=>{
 
-const btn = document.createElement("button");
+const btn=document.createElement("button");
 btn.className="group-btn";
 
 if(g.link){
-btn.onclick = ()=>openGroup(g.link);
+
+btn.onclick=()=>openGroup(g.link);
+
 }else{
-btn.onclick = ()=>{
 
-if(window.Telegram && Telegram.WebApp){
+btn.onclick=()=>{
 
-Telegram.WebApp.showPopup({
+if(tg){
+
+tg.showPopup({
 title:"Acceso restringido",
-message: userName + ", este chat está disponible solo para miembros verificados",
+message:`${userName}, este chat está disponible solo para miembros verificados`,
 buttons:[{type:"ok"}]
-
 });
 
 }else{
 
-alert(userName + ", este chat está disponible solo para miembros verificados");
+alert(`${userName}, este chat está disponible solo para miembros verificados`);
 
 }
 
-}
+};
+
 }
 
-const emojiList = shuffledEmojis[index % shuffledEmojis.length];
+const emoji=shuffled[index % shuffled.length];
 
 btn.innerHTML=`
 <img class="group-img" src="${g.img}">
@@ -192,19 +205,21 @@ btn.innerHTML=`
 </div>
 </div>
 
-<span class="emoji">${emojiList}</span>
+<span class="emoji">${emoji}</span>
 `;
 
 document.querySelector(".menu").appendChild(btn);
 
 });
 
+/* FORMATEAR NUMEROS */
+
 function format(n){
-if(n>=1000){
-return (n/1000).toFixed(1)+"K";
-}
+if(n>=1000){return(n/1000).toFixed(1)+"K";}
 return n;
 }
+
+/* CONTADORES */
 
 function initCounters(){
 
@@ -218,20 +233,20 @@ exclusive:{views:8000,members:6500}
 };
 
 groups.forEach(g=>{
-
 document.getElementById(`views-${g.id}`).innerText=format(data[g.id].views);
 document.getElementById(`members-${g.id}`).innerText=format(data[g.id].members);
-
 });
 
 }
 
 initCounters();
 
+/* ABRIR GRUPOS */
+
 function openGroup(link){
 
-if(window.Telegram && Telegram.WebApp){
-Telegram.WebApp.openTelegramLink(link);
+if(tg){
+tg.openTelegramLink(link);
 }else{
 window.open(link,"_blank");
 }
@@ -242,3 +257,5 @@ window.open(link,"_blank");
 
 </body>
 </html>
+```
+
