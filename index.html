@@ -6,6 +6,7 @@
 <title>Grupos VIP</title>
 
 <style>
+
 body{
 margin:0;
 font-family:Arial;
@@ -109,6 +110,28 @@ animation:float 1.5s infinite ease-in-out;
 50%{transform:translateY(-4px)}
 100%{transform:translateY(0)}
 }
+
+/* CANDADO */
+
+.lock{
+margin-left:auto;
+width:22px;
+height:22px;
+transition:transform .25s;
+}
+
+.lock.shake{
+animation:lockShake .35s;
+}
+
+@keyframes lockShake{
+0%{transform:rotate(0)}
+25%{transform:rotate(-15deg)}
+50%{transform:rotate(15deg)}
+75%{transform:rotate(-10deg)}
+100%{transform:rotate(0)}
+}
+
 </style>
 </head>
 
@@ -122,19 +145,21 @@ animation:float 1.5s infinite ease-in-out;
 let userName = "usuario";
 
 if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe.user) {
-  userName = Telegram.WebApp.initDataUnsafe.user.first_name;
+userName = Telegram.WebApp.initDataUnsafe.user.first_name;
 }
 
 const groups = [
+
 {name:"ONLYFANS 🏆", img:"https://i.ibb.co/5X0PQH3q/4-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans", id:"onlyfans"},
 {name:"DEEP WEB 🔞", img:"https://i.ibb.co/NdP0DQJT/6.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=deepweb", id:"deepweb"},
 {name:"SUGAR DADDY 👅", img:"https://i.ibb.co/rK41hHPt/1-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=sugardaddy", id:"sugardaddy"},
 {name:"SCHOOL GIRL 🤸‍♀️", img:"https://i.ibb.co/4RcKP59G/3.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=schoolgirl", id:"schoolgirl"},
 {name:"⛔VALE TODO⛔", img:"https://i.ibb.co/kg2fDXRL/IMG-20260311-124552-378.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=valetodo", id:"valetodo"},
 {name:"🍑Exclusivo 💎", img:"https://i.ibb.co/4gpVcSNk/IMG-20260227-113145-675.jpg", link:null, id:"exclusive"}
+
 ];
 
-const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","✨","🎉","😜","💫"];
+const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","🔞","🎉","😜","💫"];
 
 const shuffledEmojis = [...emojis].sort(()=>0.5 - Math.random());
 
@@ -144,9 +169,19 @@ const btn = document.createElement("button");
 btn.className="group-btn";
 
 if(g.link){
+
 btn.onclick = ()=>openGroup(g.link);
+
 }else{
+
 btn.onclick = ()=>{
+
+const lock = document.getElementById(`lock-${g.id}`);
+if(lock){
+lock.classList.remove("shake");
+void lock.offsetWidth;
+lock.classList.add("shake");
+}
 
 if(window.Telegram && Telegram.WebApp){
 
@@ -164,35 +199,50 @@ alert(userName + ", este chat está disponible solo para miembros verificados");
 }
 
 }
+
 }
 
 const emojiList = shuffledEmojis[index % shuffledEmojis.length];
 
 btn.innerHTML=`
+
 <img class="group-img" src="${g.img}">
+
 <div class="group-info">
+
 <div class="group-name">${g.name}</div>
 
 <div class="stats">
 
 <div class="stat">
+
 <svg class="icon" viewBox="0 0 24 24">
 <path d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
 </svg>
+
 <span class="views" id="views-${g.id}"></span>
+
 </div>
 
 <div class="stat">
+
 <svg class="icon" viewBox="0 0 24 24">
 <path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
 </svg>
+
 <span class="members" id="members-${g.id}"></span>
+
 </div>
 
 </div>
+
 </div>
 
-<span class="emoji">${emojiList}</span>
+${g.id === "exclusive"
+? `<img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="lock" id="lock-${g.id}">`
+: `<span class="emoji">${emojiList}</span>`
+}
+
 `;
 
 document.querySelector(".menu").appendChild(btn);
