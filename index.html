@@ -118,6 +118,13 @@ animation:float 1.5s infinite ease-in-out;
 
 <script>
 
+// OBTENER NOMBRE DEL USUARIO DE TELEGRAM
+let userName = "usuario";
+
+if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe.user) {
+  userName = Telegram.WebApp.initDataUnsafe.user.first_name;
+}
+
 const groups = [
 {name:"ONLYFANS 🏆", img:"https://i.ibb.co/5X0PQH3q/4-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans", id:"onlyfans"},
 {name:"DEEP WEB 🔞", img:"https://i.ibb.co/NdP0DQJT/6.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=deepweb", id:"deepweb"},
@@ -129,10 +136,7 @@ const groups = [
 
 const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","🔞","🎉","😜","💫"];
 
-// Mezclar emojis
 const shuffledEmojis = [...emojis].sort(()=>0.5 - Math.random());
-
-/* CREAR BOTONES */
 
 groups.forEach((g,index)=>{
 
@@ -142,7 +146,24 @@ btn.className="group-btn";
 if(g.link){
 btn.onclick = ()=>openGroup(g.link);
 }else{
-btn.onclick = ()=>alert("Chat disponible para miembros verificados");
+btn.onclick = ()=>{
+
+if(window.Telegram && Telegram.WebApp){
+
+Telegram.WebApp.showPopup({
+title:"Acceso restringido",
+message: userName + ", este chat está disponible solo para miembros verificados",
+buttons:[{type:"ok"}]
+
+});
+
+}else{
+
+alert(userName + ", este chat está disponible solo para miembros verificados");
+
+}
+
+}
 }
 
 const emojiList = shuffledEmojis[index % shuffledEmojis.length];
@@ -151,6 +172,7 @@ btn.innerHTML=`
 <img class="group-img" src="${g.img}">
 <div class="group-info">
 <div class="group-name">${g.name}</div>
+
 <div class="stats">
 
 <div class="stat">
@@ -177,8 +199,6 @@ document.querySelector(".menu").appendChild(btn);
 
 });
 
-/* FORMATO NUMEROS */
-
 function format(n){
 if(n>=1000){
 return (n/1000).toFixed(1)+"K";
@@ -186,11 +206,9 @@ return (n/1000).toFixed(1)+"K";
 return n;
 }
 
-/* CONTADORES */
-
 function initCounters(){
 
-const data = {
+const data={
 onlyfans:{views:20100,members:18300},
 deepweb:{views:15000,members:10500},
 sugardaddy:{views:18000,members:13000},
@@ -201,17 +219,8 @@ exclusive:{views:8000,members:6500}
 
 groups.forEach(g=>{
 
-const viewKey=`views_${g.id}`;
-const memberKey=`members_${g.id}`;
-
-let views=data[g.id].views;
-let members=data[g.id].members;
-
-localStorage.setItem(viewKey,views);
-localStorage.setItem(memberKey,members);
-
-document.getElementById(`views-${g.id}`).innerText=format(views);
-document.getElementById(`members-${g.id}`).innerText=format(members);
+document.getElementById(`views-${g.id}`).innerText=format(data[g.id].views);
+document.getElementById(`members-${g.id}`).innerText=format(data[g.id].members);
 
 });
 
@@ -219,14 +228,14 @@ document.getElementById(`members-${g.id}`).innerText=format(members);
 
 initCounters();
 
-/* ABRIR GRUPO */
-
 function openGroup(link){
+
 if(window.Telegram && Telegram.WebApp){
 Telegram.WebApp.openTelegramLink(link);
 }else{
 window.open(link,"_blank");
 }
+
 }
 
 </script>
