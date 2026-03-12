@@ -128,9 +128,10 @@ const groups = [
 
 const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","✨","🎉","😜","💫"];
   
-function getRandomEmojis(list, count){
-  const shuffled = [...list].sort(()=>0.5 - Math.random());
-  return shuffled.slice(0, count);
+// Mezclar emojis
+const shuffledEmojis = [...emojis].sort(()=>0.5 - Math.random());
+
+groups.forEach((g,index)=>{
 }
 groups.forEach(g=>{
   const btn = document.createElement("button");
@@ -142,7 +143,7 @@ groups.forEach(g=>{
     btn.onclick = ()=>alert("Chat disponible para miembros verificados");
   }
 
-  const emojiList = getRandomEmojis(emojis,5).join(" ");
+  const emojiList = shuffledEmojis[index];
 
   btn.innerHTML=`
   <img class="group-img" src="${g.img}">
