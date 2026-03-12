@@ -127,7 +127,11 @@ const groups = [
 ];
 
 const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","✨","🎉","😜","💫"];
-
+  
+function getRandomEmojis(list, count){
+  const shuffled = [...list].sort(()=>0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
 groups.forEach(g=>{
   const btn = document.createElement("button");
   btn.className="group-btn";
