@@ -117,99 +117,118 @@ animation:float 1.5s infinite ease-in-out;
 <div class="menu"></div>
 
 <script>
+
 const groups = [
-  {name:"ONLYFANS 🏆", img:"https://i.ibb.co/5X0PQH3q/4-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans", id:"onlyfans"},
-  {name:"DEEP WEB 🔞", img:"https://i.ibb.co/NdP0DQJT/6.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=deepweb", id:"deepweb"},
-  {name:"SUGAR DADDY 👅", img:"https://i.ibb.co/rK41hHPt/1-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=sugardaddy", id:"sugardaddy"},
-  {name:"SCHOOL GIRL 🤸‍♀️", img:"https://i.ibb.co/4RcKP59G/3.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=schoolgirl", id:"schoolgirl"},
-  {name:"⛔VALE TODO⛔", img:"https://i.ibb.co/kg2fDXRL/IMG-20260311-124552-378.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=valetodo", id:"valetodo"},
-  {name:"🍑Exclusivo 💎", img:"https://i.ibb.co/4gpVcSNk/IMG-20260227-113145-675.jpg", link:null, id:"exclusive"}
+{name:"ONLYFANS 🏆", img:"https://i.ibb.co/5X0PQH3q/4-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans", id:"onlyfans"},
+{name:"DEEP WEB 🔞", img:"https://i.ibb.co/NdP0DQJT/6.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=deepweb", id:"deepweb"},
+{name:"SUGAR DADDY 👅", img:"https://i.ibb.co/rK41hHPt/1-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=sugardaddy", id:"sugardaddy"},
+{name:"SCHOOL GIRL 🤸‍♀️", img:"https://i.ibb.co/4RcKP59G/3.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=schoolgirl", id:"schoolgirl"},
+{name:"⛔VALE TODO⛔", img:"https://i.ibb.co/kg2fDXRL/IMG-20260311-124552-378.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=valetodo", id:"valetodo"},
+{name:"🍑Exclusivo 💎", img:"https://i.ibb.co/4gpVcSNk/IMG-20260227-113145-675.jpg", link:null, id:"exclusive"}
 ];
 
-const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","✨","🎉","😜","💫"];
-  
+const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","🔞","🎉","😜","💫"];
+
 // Mezclar emojis
 const shuffledEmojis = [...emojis].sort(()=>0.5 - Math.random());
 
+/* CREAR BOTONES */
+
 groups.forEach((g,index)=>{
+
+const btn = document.createElement("button");
+btn.className="group-btn";
+
+if(g.link){
+btn.onclick = ()=>openGroup(g.link);
+}else{
+btn.onclick = ()=>alert("Chat disponible para miembros verificados");
 }
-groups.forEach(g=>{
-  const btn = document.createElement("button");
-  btn.className="group-btn";
 
-  if(g.link){
-    btn.onclick = ()=>openGroup(g.link);
-  }else{
-    btn.onclick = ()=>alert("Chat disponible para miembros verificados");
-  }
+const emojiList = shuffledEmojis[index % shuffledEmojis.length];
 
-  const emojiList = shuffledEmojis[index];
+btn.innerHTML=`
+<img class="group-img" src="${g.img}">
+<div class="group-info">
+<div class="group-name">${g.name}</div>
+<div class="stats">
 
-  btn.innerHTML=`
-  <img class="group-img" src="${g.img}">
-  <div class="group-info">
-    <div class="group-name">${g.name}</div>
-    <div class="stats">
-      <div class="stat">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>
-        <span class="views" id="views-${g.id}"></span>
-      </div>
-      <div class="stat">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-        <span class="members" id="members-${g.id}"></span>
-      </div>
-    </div>
-  </div>
-  <span class="emoji">${emojiList}</span>
-  `;
+<div class="stat">
+<svg class="icon" viewBox="0 0 24 24">
+<path d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+</svg>
+<span class="views" id="views-${g.id}"></span>
+</div>
 
-  document.querySelector(".menu").appendChild(btn);
+<div class="stat">
+<svg class="icon" viewBox="0 0 24 24">
+<path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+</svg>
+<span class="members" id="members-${g.id}"></span>
+</div>
+
+</div>
+</div>
+
+<span class="emoji">${emojiList}</span>
+`;
+
+document.querySelector(".menu").appendChild(btn);
+
 });
 
+/* FORMATO NUMEROS */
+
 function format(n){
-  if(n>=1000){
-    return (n/1000).toFixed(1)+"K";
-  }
-  return n;
+if(n>=1000){
+return (n/1000).toFixed(1)+"K";
 }
+return n;
+}
+
+/* CONTADORES */
 
 function initCounters(){
 
-  const data = {
-    onlyfans:{views:20100, members:18300},
-    deepweb:{views:15000, members:10500},
-    sugardaddy:{views:18000, members:13000},
-    schoolgirl:{views:25000, members:20200},
-    valetodo:{views:10000, members:8000},
-    exclusive:{views:8000, members:6500}
-  };
+const data = {
+onlyfans:{views:20100,members:18300},
+deepweb:{views:15000,members:10500},
+sugardaddy:{views:18000,members:13000},
+schoolgirl:{views:25000,members:20200},
+valetodo:{views:10000,members:8000},
+exclusive:{views:8000,members:6500}
+};
 
-  groups.forEach(g=>{
+groups.forEach(g=>{
 
-    const viewKey = `views_${g.id}`;
-    const memberKey = `members_${g.id}`;
+const viewKey=`views_${g.id}`;
+const memberKey=`members_${g.id}`;
 
-    let views = data[g.id].views;
-let members = data[g.id].members;
+let views=data[g.id].views;
+let members=data[g.id].members;
 
 localStorage.setItem(viewKey,views);
 localStorage.setItem(memberKey,members);
 
-    document.getElementById(`views-${g.id}`).innerText = format(views);
-    document.getElementById(`members-${g.id}`).innerText = format(members);
+document.getElementById(`views-${g.id}`).innerText=format(views);
+document.getElementById(`members-${g.id}`).innerText=format(members);
 
-  });
- }
+});
+
+}
 
 initCounters();
 
+/* ABRIR GRUPO */
+
 function openGroup(link){
-  if(window.Telegram && Telegram.WebApp){
-    Telegram.WebApp.openTelegramLink(link);
-  }else{
-    window.open(link,"_blank");
-  }
+if(window.Telegram && Telegram.WebApp){
+Telegram.WebApp.openTelegramLink(link);
+}else{
+window.open(link,"_blank");
 }
+}
+
 </script>
 
 </body>
