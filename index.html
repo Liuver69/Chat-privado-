@@ -201,14 +201,13 @@ if(window.Telegram && Telegram.WebApp){
 
 Telegram.WebApp.showPopup({
 title:"Acceso restringido",
-message: userName + ", este chat está disponible solo para miembros verificados",
+message:"Este chat solo está disponible para miembros verificados.",
 buttons:[{type:"ok"}]
-
 });
 
 }else{
 
-alert(userName + ", este chat está disponible solo para miembros verificados");
+alert("este chat está disponible solo para miembros verificados");
 
 }
 
