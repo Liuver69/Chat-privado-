@@ -148,10 +148,16 @@ if (window.Telegram && Telegram.WebApp) {
 
 Telegram.WebApp.ready();
 
-const user = Telegram.WebApp.initDataUnsafe?.user;
+try {
 
-if (user) {
-userName = user.first_name || user.username || "usuario";
+const data = Telegram.WebApp.initDataUnsafe;
+
+if (data && data.user) {
+userName = data.user.first_name || data.user.username || "usuario";
+}
+
+} catch(e){
+userName = "usuario";
 }
 
 }
