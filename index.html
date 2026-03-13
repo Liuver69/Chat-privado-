@@ -144,8 +144,16 @@ animation:lockShake .35s;
 // OBTENER NOMBRE DEL USUARIO DE TELEGRAM
 let userName = "usuario";
 
-if (window.Telegram && Telegram.WebApp && Telegram.WebApp.initDataUnsafe.user) {
-userName = Telegram.WebApp.initDataUnsafe.user.first_name;
+if (window.Telegram && Telegram.WebApp) {
+
+Telegram.WebApp.ready();
+
+const user = Telegram.WebApp.initDataUnsafe?.user;
+
+if (user) {
+userName = user.first_name || user.username || "usuario";
+}
+
 }
 
 const groups = [
