@@ -1,306 +1,257 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grupos VIP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupos VIP</title>
 
-<style>
+    <style>
+        body{
+            margin:0;
+            font-family:Arial;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:url("https://i.ibb.co/gbhHpgmV/IMG-20260204-105351-076.jpg");
+            background-size:cover;
+            background-position:center;
+        }
 
-body{
-margin:0;
-font-family:Arial;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:url("https://i.ibb.co/gbhHpgmV/IMG-20260204-105351-076.jpg");
-background-size:cover;
-background-position:center;
-}
+        body::before{
+            content:"";
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            backdrop-filter:blur(6px);
+            background:rgba(0,0,0,0.35);
+            z-index:-1;
+        }
 
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-backdrop-filter:blur(6px);
-background:rgba(0,0,0,0.35);
-z-index:-1;
-}
+        .menu{
+            width:320px;
+            background:rgba(0,0,0,0.75);
+            padding:20px;
+            border-radius:15px;
+            backdrop-filter:blur(5px);
+        }
 
-.menu{
-width:320px;
-background:rgba(0,0,0,0.75);
-padding:20px;
-border-radius:15px;
-backdrop-filter:blur(5px);
-}
+        .group-btn{
+            display:flex;
+            align-items:center;
+            width:100%;
+            background:#1e1e1e;
+            border:none;
+            padding:10px;
+            margin:10px 0;
+            border-radius:10px;
+            cursor:pointer;
+            color:white;
+            transition:.2s;
+        }
 
-.group-btn{
-display:flex;
-align-items:center;
-width:100%;
-background:#1e1e1e;
-border:none;
-padding:10px;
-margin:10px 0;
-border-radius:10px;
-cursor:pointer;
-color:white;
-transition:.2s;
-}
+        .group-btn:hover{
+            background:#2c2c2c;
+            transform:scale(1.03);
+        }
 
-.group-btn:hover{
-background:#2c2c2c;
-transform:scale(1.03);
-}
+        .group-img{
+            width:40px;
+            height:40px;
+            border-radius:50%;
+            margin-right:12px;
+            object-fit:cover;
+            border:2px solid #2ea6ff;
+            pointer-events:none;
+            user-select:none;
+        }
 
-.group-img{
-width:40px;
-height:40px;
-border-radius:50%;
-margin-right:12px;
-object-fit:cover;
-border:2px solid #2ea6ff;
-pointer-events:none;
-user-select:none;
-}
+        .group-info{
+            display:flex;
+            flex-direction:column;
+        }
 
-.group-info{
-display:flex;
-flex-direction:column;
-}
+        .group-name{
+            font-size:16px;
+            font-weight:bold;
+        }
 
-.group-name{
-font-size:16px;
-font-weight:bold;
-}
+        .stats{
+            display:flex;
+            gap:12px;
+            font-size:13px;
+            color:#e6e6e6;
+            margin-top:3px;
+        }
 
-.stats{
-display:flex;
-gap:12px;
-font-size:13px;
-color:#e6e6e6;
-margin-top:3px;
-}
+        .stat{
+            display:flex;
+            align-items:center;
+            gap:5px;
+        }
 
-.stat{
-display:flex;
-align-items:center;
-gap:5px;
-}
+        .icon{
+            width:14px;
+            height:14px;
+            fill:#e6e6e6;
+        }
 
-.icon{
-width:14px;
-height:14px;
-fill:#e6e6e6;
-}
+        .emoji{
+            margin-left:auto;
+            font-size:20px;
+            animation:float 1.5s infinite ease-in-out;
+        }
 
-.emoji{
-margin-left:auto;
-font-size:20px;
-animation:float 1.5s infinite ease-in-out;
-}
+        @keyframes float{
+            0%{transform:translateY(0)}
+            50%{transform:translateY(-4px)}
+            100%{transform:translateY(0)}
+        }
 
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-4px)}
-100%{transform:translateY(0)}
-}
+        /* CANDADO */
 
-/* CANDADO */
+        .lock{
+            margin-left:auto;
+            width:22px;
+            height:22px;
+            transition:transform .25s;
+        }
 
-.lock{
-margin-left:auto;
-width:22px;
-height:22px;
-transition:transform .25s;
-}
+        .lock.shake{
+            animation:lockShake .35s;
+        }
 
-.lock.shake{
-animation:lockShake .35s;
-}
+        @keyframes lockShake{
+            0%{transform:rotate(0)}
+            25%{transform:rotate(-15deg)}
+            50%{transform:rotate(15deg)}
+            75%{transform:rotate(-10deg)}
+            100%{transform:rotate(0)}
+        }
 
-@keyframes lockShake{
-0%{transform:rotate(0)}
-25%{transform:rotate(-15deg)}
-50%{transform:rotate(15deg)}
-75%{transform:rotate(-10deg)}
-100%{transform:rotate(0)}
-}
-
-</style>
+    </style>
 </head>
-
 <body>
 
 <div class="menu"></div>
 
 <script>
+    const allGroups = [
+        {name:"ONLYFANS 🏆", img:"https://i.ibb.co/5X0PQH3q/4-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans", id:"onlyfans"},
+        {name:"DEEP WEB 🔞", img:"https://i.ibb.co/NdP0DQJT/6.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=deepweb", id:"deepweb"},
+        {name:"SUGAR DADDY 👅", img:"https://i.ibb.co/rK41hHPt/1-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=sugardaddy", id:"sugardaddy"},
+        {name:"SCHOOL GIRL 🤸‍♀️", img:"https://i.ibb.co/4RcKP59G/3.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=schoolgirl", id:"schoolgirl"},
+        {name:"⛔VALE TODO⛔", img:"https://i.ibb.co/kg2fDXRL/IMG-20260311-124552-378.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=valetodo", id:"valetodo"},
+        {name:"🍑Exclusivo 💎", img:"https://i.ibb.co/4gpVcSNk/IMG-20260227-113145-675.jpg", link:null, id:"exclusive"},
+        {name:"Trans & Gay 🌈", img:"https://i.ibb.co/QP8rV5F/trans-gay.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=transgay", id:"transgay", isLocked: true}, // Trans & Gay tendrá el candado
+        {name:"LGBTQ+ 🌟", img:"https://i.ibb.co/BrK2JYQ/lgbtq.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=lgbtq", id:"lgbtq"} // Sin candado, solo abre el enlace
+    ];
 
-// OBTENER NOMBRE DEL USUARIO DE TELEGRAM
-let userName = "usuario";
+    const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💎","🔞","🎉","😜","💫"];
 
-if (window.Telegram && Telegram.WebApp) {
+    const shuffledEmojis = [...emojis].sort(() => 0.5 - Math.random());
 
-Telegram.WebApp.ready();
+    // Función para seleccionar aleatoriamente 6 grupos
+    function getRandomGroups(allGroups, numGroups) {
+        const shuffledGroups = [...allGroups].sort(() => 0.5 - Math.random());
+        return shuffledGroups.slice(0, numGroups);
+    }
 
-try {
+    const selectedGroups = getRandomGroups(allGroups, 6); // Seleccionamos 6 grupos aleatorios
 
-const data = Telegram.WebApp.initDataUnsafe;
+    selectedGroups.forEach((g, index) => {
+        const btn = document.createElement("button");
+        btn.className = "group-btn";
 
-if (data && data.user) {
-userName = data.user.first_name || data.user.username || "usuario";
-}
+        if (g.isLocked) { // Si el grupo tiene el candado
+            btn.onclick = () => {
+                const lock = document.getElementById(`lock-${g.id}`);
+                if (lock) {
+                    lock.classList.remove("shake");
+                    void lock.offsetWidth;
+                    lock.classList.add("shake");
+                }
 
-} catch(e){
-userName = "usuario";
-}
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.showPopup({
+                        title: "Acceso restringido",
+                        message: "Este chat solo está disponible para miembros verificados.",
+                        buttons: [{ type: "ok" }]
+                    });
+                } else {
+                    alert("Este chat solo está disponible para miembros verificados.");
+                }
+            };
+        } else { // Si no tiene el candado, abre el enlace
+            btn.onclick = () => openGroup(g.link);
+        }
 
-}
+        const emojiList = shuffledEmojis[index % shuffledEmojis.length];
 
-const groups = [
+        btn.innerHTML = `
+            <img class="group-img" src="${g.img}">
+            <div class="group-info">
+                <div class="group-name">${g.name}</div>
+                <div class="stats">
+                    <div class="stat">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+                        </svg>
+                        <span class="views" id="views-${g.id}"></span>
+                    </div>
+                    <div class="stat">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                        </svg>
+                        <span class="members" id="members-${g.id}"></span>
+                    </div>
+                </div>
+            </div>
+            ${g.id === "exclusive" || g.isLocked ? 
+                `<img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="lock" id="lock-${g.id}">` :
+                `<span class="emoji">${emojiList}</span>`
+            }
+        `;
 
-{name:"ONLYFANS 🏆", img:"https://i.ibb.co/5X0PQH3q/4-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans", id:"onlyfans"},
-{name:"DEEP WEB 🔞", img:"https://i.ibb.co/NdP0DQJT/6.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=deepweb", id:"deepweb"},
-{name:"SUGAR DADDY 👅", img:"https://i.ibb.co/rK41hHPt/1-1.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=sugardaddy", id:"sugardaddy"},
-{name:"SCHOOL GIRL 🤸‍♀️", img:"https://i.ibb.co/4RcKP59G/3.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=schoolgirl", id:"schoolgirl"},
-{name:"⛔VALE TODO⛔", img:"https://i.ibb.co/kg2fDXRL/IMG-20260311-124552-378.jpg", link:"tg://resolve?domain=XGroupHelpBot&startapp=valetodo", id:"valetodo"},
-{name:"🍑Exclusivo 💎", img:"https://i.ibb.co/4gpVcSNk/IMG-20260227-113145-675.jpg", link:null, id:"exclusive"}
+        document.querySelector(".menu").appendChild(btn);
+    });
 
-];
+    function format(n) {
+        if (n >= 1000) {
+            return (n / 1000).toFixed(1) + "K";
+        }
+        return n;
+    }
 
-const emojis = ["🍑","💋","😈","⚡","😏","🔥","😍","🥵","🍒","👅","💣","🤤","👀","😱","💎","🔞","🎉","😜","💫"];
+    function initCounters() {
+        const data = {
+            onlyfans: { views: 21100, members: 18500 },
+            deepweb: { views: 16000, members: 10900 },
+            sugardaddy: { views: 18600, members: 13400 },
+            schoolgirl: { views: 25700, members: 20500 },
+            valetodo: { views: 10200, members: 8200 },
+            exclusive: { views: 9100, members: 6800 },
+            transgay: { views: 5000, members: 4500 },
+            lgbtq: { views: 3000, members: 2500 }
+        };
 
-const shuffledEmojis = [...emojis].sort(()=>0.5 - Math.random());
+        selectedGroups.forEach(g => {
+            document.getElementById(`views-${g.id}`).innerText = format(data[g.id].views);
+            document.getElementById(`members-${g.id}`).innerText = format(data[g.id].members);
+        });
+    }
 
-groups.forEach((g,index)=>{
+    initCounters();
 
-const btn = document.createElement("button");
-btn.className="group-btn";
-
-if(g.link){
-
-btn.onclick = ()=>openGroup(g.link);
-
-}else{
-
-btn.onclick = ()=>{
-
-const lock = document.getElementById(`lock-${g.id}`);
-if(lock){
-lock.classList.remove("shake");
-void lock.offsetWidth;
-lock.classList.add("shake");
-}
-
-if(window.Telegram && Telegram.WebApp){
-
-Telegram.WebApp.showPopup({
-title:"Acceso restringido",
-message:"Este chat solo está disponible para miembros verificados.",
-buttons:[{type:"ok"}]
-});
-
-}else{
-
-alert("Este chat solo está disponible para miembros verificados.");
-
-}
-
-}
-
-}
-
-const emojiList = shuffledEmojis[index % shuffledEmojis.length];
-
-btn.innerHTML=`
-
-<img class="group-img" src="${g.img}">
-
-<div class="group-info">
-
-<div class="group-name">${g.name}</div>
-
-<div class="stats">
-
-<div class="stat">
-
-<svg class="icon" viewBox="0 0 24 24">
-<path d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
-</svg>
-
-<span class="views" id="views-${g.id}"></span>
-
-</div>
-
-<div class="stat">
-
-<svg class="icon" viewBox="0 0 24 24">
-<path d="M16 11c1.66 0 3-1.34 3-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zM8 11c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-</svg>
-
-<span class="members" id="members-${g.id}"></span>
-
-</div>
-
-</div>
-
-</div>
-
-${g.id === "exclusive"
-? `<img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="lock" id="lock-${g.id}">`
-: `<span class="emoji">${emojiList}</span>`
-}
-
-`;
-
-document.querySelector(".menu").appendChild(btn);
-
-});
-
-function format(n){
-if(n>=1000){
-return (n/1000).toFixed(1)+"K";
-}
-return n;
-}
-
-function initCounters(){
-
-const data={
-onlyfans:{views:21100,members:18500},
-deepweb:{views:16000,members:10900},
-sugardaddy:{views:18600,members:13400},
-schoolgirl:{views:25700,members:20500},
-valetodo:{views:10200,members:8200},
-exclusive:{views:9100,members:6800}
-};
-
-groups.forEach(g=>{
-
-document.getElementById(`views-${g.id}`).innerText=format(data[g.id].views);
-document.getElementById(`members-${g.id}`).innerText=format(data[g.id].members);
-
-});
-
-}
-
-initCounters();
-
-function openGroup(link){
-
-if(window.Telegram && Telegram.WebApp){
-Telegram.WebApp.openTelegramLink(link);
-}else{
-window.open(link,"_blank");
-}
-
-}
-
+    function openGroup(link) {
+        if (window.Telegram && Telegram.WebApp) {
+            Telegram.WebApp.openTelegramLink(link);
+        } else {
+            window.open(link, "_blank");
+        }
+    }
 </script>
 
 </body>
