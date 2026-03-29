@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grupos VIP</title>
 
+<!-- Font Awesome para iconos originales -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
 
 body{
@@ -32,7 +35,6 @@ z-index:-1;
 }
 
 /* PORTADA +18 */
-
 #portada{
 position:fixed;
 top:0;
@@ -145,7 +147,6 @@ justify-content:center;
 }
 
 /* MENU */
-
 .menu{
 width:320px;
 background:rgba(0,0,0,0.75);
@@ -233,9 +234,8 @@ gap:5px;
 }
 
 .icon{
-width:14px;
-height:14px;
-fill:#e6e6e6;
+font-size:14px;
+color:#e6e6e6;
 }
 
 .emoji{
@@ -298,39 +298,31 @@ animation:lockShake .35s;
 <script>
 
 /* PORTADA */
-
 const portada=document.getElementById("portada");
 const btnSi=document.getElementById("btn-si");
-
 btnSi.onclick=()=>{
 portada.style.opacity=0;
 setTimeout(()=>{portada.style.display="none"},500);
 };
 
 /* ANUNCIO */
-
 const floatingAd=document.getElementById("floatingAd");
-
 function fadeAd(){
 floatingAd.style.opacity="1";
 setTimeout(()=>{floatingAd.style.opacity="0"},4000);
 }
-
 fadeAd();
 setInterval(fadeAd,8000);
-
 floatingAd.onclick=()=>{
 window.open("https://downyattainprojects.com/k6dgrqyc5g?key=a8ff3a3445842a223c56722310a7ef82","_blank");
 };
 
 /* TELEGRAM */
-
 if(window.Telegram && Telegram.WebApp){
 Telegram.WebApp.ready();
 }
 
 const groups=[
-
 {name:"ONLYFANS 🏆",img:"https://i.ibb.co/5X0PQH3q/4-1.jpg",link:"tg://resolve?domain=XGroupHelpBot&startapp=onlyfans",id:"onlyfans"},
 {name:"DEEP WEB 🔞",img:"https://i.ibb.co/NdP0DQJT/6.jpg",link:"tg://resolve?domain=XGroupHelpBot&startapp=deepweb",id:"deepweb"},
 {name:"SUGAR DADDY 👅",img:"https://i.ibb.co/rK41hHPt/1-1.jpg",link:"tg://resolve?domain=XGroupHelpBot&startapp=sugardaddy",id:"sugardaddy"},
@@ -338,17 +330,14 @@ const groups=[
 {name:"⛔NO RULES⛔",img:"https://i.ibb.co/kg2fDXRL/IMG-20260311-124552-378.jpg",link:"tg://resolve?domain=XGroupHelpBot&startapp=valetodo",id:"valetodo"},
 {name:"GRUPO GRATUITO ♥️",img:"https://i.ibb.co/k2dK7qv8/IMG-20260319-213723-936.jpg",link:"https://kut.lat/dG7d",id:"transgay"},
 {name:"🍑EXCLUSIVO💎",img:"https://i.ibb.co/4gpVcSNk/IMG-20260227-113145-675.jpg",link:null,id:"exclusive"}
-
 ];
 
 const emojis=["🍑","💋","😈","⚡","👀","🤤","😏","🍓","🔥","😍","🥵","😱","🌶️","💣","🍒","👅","💎","🔞","🎉","😜","💫"];
 const shuffled=[...emojis].sort(()=>0.5-Math.random());
 
 groups.forEach((g,i)=>{
-
 const btn=document.createElement("button");
 btn.className="group-btn";
-
 if(g.link){
 btn.onclick=()=>openGroup(g.link);
 }else{
@@ -364,51 +353,35 @@ alert("Este chat solo está disponible para miembros verificados.");
 const emoji=g.id==="transgay"?"🆕":shuffled[i];
 
 btn.innerHTML=
-
 <div class="img-wrap">
 <img class="group-img ${g.id==="transgay"?"blur-img":""}" src="${g.img}">
 ${g.id==="transgay"?<img class="photo-lock" src="https://cdn-icons-png.flaticon.com/512/565/565547.png">:""}
 </div>
 
 <div class="group-info">
-
 <div class="group-name">${g.name}</div>
-
 <div class="stats">
 
 <div class="stat">
-
-<svg class="icon" viewBox="0 0 24 24">
-<path d="M12 5C5 5 1 12 1 12s4 7 11 7 11-7 11-7-4-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
-</svg>
-
+<i class="fas fa-eye icon"></i>
 <span id="views-${g.id}"></span>
-
 </div>
 
 <div class="stat">
-
-<svg class="icon" viewBox="0 0 24 24">
-<path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z"/>
-</svg>
-
+<i class="fas fa-user-plus icon"></i>
 <span id="members-${g.id}"></span>
-
 </div>
 
 </div>
-
 </div>
 
 ${g.id==="exclusive"
 ? <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="lock" id="lock-${g.id}">
 : <span class="emoji">${emoji}</span>
 }
-
 ;
 
 document.querySelector(".menu").appendChild(btn);
-
 });
 
 function format(n){
@@ -416,7 +389,6 @@ return n>=1000?(n/1000).toFixed(1)+"K":n;
 }
 
 function initCounters(){
-
 const data={
 onlyfans:{views:23500,members:21000},
 deepweb:{views:20900,members:18000},
@@ -426,12 +398,10 @@ valetodo:{views:13600,members:9850},
 transgay:{views:6400,members:4500},
 exclusive:{views:11120,members:9900}
 };
-
 groups.forEach(g=>{
 document.getElementById(views-${g.id}).innerText=format(data[g.id].views);
 document.getElementById(members-${g.id}).innerText=format(data[g.id].members);
 });
-
 }
 
 initCounters();
