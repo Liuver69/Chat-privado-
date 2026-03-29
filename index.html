@@ -342,7 +342,7 @@ if(g.link){
 btn.onclick=()=>openGroup(g.link);
 }else{
 btn.onclick=()=>{
-const lock=document.getElementById(lock-${g.id});
+const lock=document.getElementById(`lock-${g.id}`);
 lock.classList.remove("shake");
 void lock.offsetWidth;
 lock.classList.add("shake");
@@ -352,10 +352,10 @@ alert("Este chat solo está disponible para miembros verificados.");
 
 const emoji=g.id==="transgay"?"🆕":shuffled[i];
 
-btn.innerHTML=
+btn.innerHTML=`
 <div class="img-wrap">
 <img class="group-img ${g.id==="transgay"?"blur-img":""}" src="${g.img}">
-${g.id==="transgay"?<img class="photo-lock" src="https://cdn-icons-png.flaticon.com/512/565/565547.png">:""}
+${g.id==="transgay"?`<img class="photo-lock" src="https://cdn-icons-png.flaticon.com/512/565/565547.png">`:""}
 </div>
 
 <div class="group-info">
@@ -376,10 +376,10 @@ ${g.id==="transgay"?<img class="photo-lock" src="https://cdn-icons-png.flaticon.
 </div>
 
 ${g.id==="exclusive"
-? <img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="lock" id="lock-${g.id}">
-: <span class="emoji">${emoji}</span>
+? `<img src="https://cdn-icons-png.flaticon.com/512/565/565547.png" class="lock" id="lock-${g.id}">`
+: `<span class="emoji">${emoji}</span>`
 }
-;
+`;
 
 document.querySelector(".menu").appendChild(btn);
 });
@@ -399,8 +399,8 @@ transgay:{views:6400,members:4500},
 exclusive:{views:11120,members:9900}
 };
 groups.forEach(g=>{
-document.getElementById(views-${g.id}).innerText=format(data[g.id].views);
-document.getElementById(members-${g.id}).innerText=format(data[g.id].members);
+document.getElementById(`views-${g.id}`).innerText=format(data[g.id].views);
+document.getElementById(`members-${g.id}`).innerText=format(data[g.id].members);
 });
 }
 
