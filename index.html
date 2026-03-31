@@ -329,7 +329,8 @@ const groups=[
 {name:"SCHOOL GIRL 🤸‍♀️💕",img:"https://i.ibb.co/4RcKP59G/3.jpg",link:"tg://resolve?domain=XGroupHelpBot&startapp=schoolgirl",id:"schoolgirl"},
 {name:"⛔NO RULES⛔",img:"https://i.ibb.co/kg2fDXRL/IMG-20260311-124552-378.jpg",link:"tg://resolve?domain=XGroupHelpBot&startapp=valetodo",id:"valetodo"},
 {name:"⛔SIN CENSURA⛔",img:"https://i.ibb.co/CKymz47v/IMG-20260217-102939-304.jpg",link:"https://kut.lat/bW44",id:"transgay"},
-{name:"🍑EXCLUSIVO💎",img:"https://i.ibb.co/SX9xWbJF/images-13.jpg",link:null,id:"exclusive"}
+{name:"🍑EXCLUSIVO💎",img:"https://i.ibb.co/SX9xWbJF/images-13.jpg",link:null,id:"exclusive"},
+{name:"INCEST🎁",img:"https://i.ibb.co/zVgW7B3c/IMG-20251106-164202-134.jpg",link:"tg://resolve?domain=XGroupHelpBot&startapp=premium",id:"premium"}
 ];
 
 const emojis=["🍑","💋","😈","⚡","👀","🤤","😏","🍓","🔥","😍","🥵","😱","🌶️","💣","🍒","👅","💎","🔞","🎉","😜","💫"];
@@ -350,12 +351,12 @@ alert("Este chat solo está disponible para miembros verificados.");
 };
 }
 
-const emoji=g.id==="transgay"?"🆕":shuffled[i];
+const emoji=g.id==="premium"?"⭐":shuffled[i];
 
 btn.innerHTML=`
 <div class="img-wrap">
-<img class="group-img ${g.id==="transgay"?"blur-img":""}" src="${g.img}">
-${g.id==="transgay"?`<img class="photo-lock" src="https://cdn-icons-png.flaticon.com/512/565/565547.png">`:""}
+<img class="group-img ${g.id==="premium"?"blur-img":""}" src="${g.img}">
+${g.id==="premium"?`<img class="photo-lock" src="https://cdn-icons-png.flaticon.com/512/565/565547.png">`:""}
 </div>
 
 <div class="group-info">
@@ -396,7 +397,8 @@ sugardaddy:{views:22500,members:17900},
 schoolgirl:{views:29750,members:24100},
 valetodo:{views:14500,members:10350},
 transgay:{views:7000,members:4900},
-exclusive:{views:12820,members:10900}
+exclusive:{views:12820,members:10900},
+premium:{views:10000,members:8500}
 };
 groups.forEach(g=>{
 document.getElementById(`views-${g.id}`).innerText=format(data[g.id].views);
